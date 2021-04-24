@@ -17,9 +17,9 @@ class Baseline(ModelBase):
         super(Baseline, self).__init__()
 
         # Task block
-        self.dropout1 = nn.Dropout2d(0.8)
-        self.ss8 = nn.Linear(in_features=in_features, out_features=8)
-        self.ss3 = nn.Linear(in_features=in_features, out_features=3)
+        
+        self.ss8 = nn.LSTM(input_size=in_features, num_layers=8, hidden_size=1, dropout=0.8)
+        self.ss3 = nn.LSTM(input_size=in_features, num_layers=3, hidden_size=1, dropout=0.8)
 
         log.info(f'<init>: \n{self}')
 
@@ -27,7 +27,6 @@ class Baseline(ModelBase):
         """ Forwarding logic """
 
         ss8 = self.ss8(x)
-        x = self.dropout1(x)
         ss3 = self.ss3(x)
 
         return [ss8, ss3]
