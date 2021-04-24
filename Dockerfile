@@ -6,9 +6,9 @@ WORKDIR /home/biolib/
 COPY challenge/requirements.txt challenge/requirements.txt
 RUN pip install -r challenge/requirements.txt
 
-# Example: COPY saved/baseline/0422-213641/checkpoints/model_best.pth model.pth
+# Example: COPY saved/baseline/0424-213550/checkpoints/model_best.pth model.pth
 # Remember to add it to dockerignore too
-COPY challenge/saved/baseline/0424-123634/checkpoints/model_best.pth model.pth
+COPY challenge/saved/baseline/0424-213550/checkpoints/model_best.pth model.pth
 
 # move final configuration
 COPY experiments/config.yml config.yml

@@ -17,6 +17,7 @@ class Baseline(ModelBase):
         super(Baseline, self).__init__()
 
         # Task block
+        self.dropout1 = nn.Dropout2d(0.8)
         self.ss8 = nn.Linear(in_features=in_features, out_features=8)
         self.ss3 = nn.Linear(in_features=in_features, out_features=3)
 
@@ -26,6 +27,8 @@ class Baseline(ModelBase):
         """ Forwarding logic """
 
         ss8 = self.ss8(x)
+        x = self.dropout1(x)
         ss3 = self.ss3(x)
 
         return [ss8, ss3]
+
