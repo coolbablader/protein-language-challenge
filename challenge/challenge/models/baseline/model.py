@@ -26,8 +26,8 @@ class Baseline(ModelBase):
     def forward(self, x: torch.tensor, mask: torch.tensor) -> torch.tensor:
         """ Forwarding logic """
 
-        ss8 = self.ss8(x)
-        ss3 = self.ss3(x)
+        ss8 = torch.flatten(self.ss8(x))
+        ss3 = torch.flatten(self.ss3(x))
 
         return [ss8, ss3]
 
