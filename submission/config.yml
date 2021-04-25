@@ -1,13 +1,13 @@
 arch:
   args:
-    in_features: 1280
+    in_features: 1300
   type: Baseline
 augmentation:
   type: null
 data_loader:
   args:
-    batch_size: 15
-    dataset_loader: ChallengeDataOnlyEmbedding
+    batch_size: 10
+    dataset_loader: ChallengeData
     nworkers: 0
     shuffle: true
     test_path:

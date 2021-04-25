@@ -18,7 +18,7 @@ class Baseline(ModelBase):
         
         # Check the nput dimensions and see if the hidden_size affects the evaluation metric. Keep hidden_size above 100 :)
         self.num_layers = 2
-        self.hidden_size = 160
+        self.hidden_size = 130
         
         # Task block
         
@@ -30,18 +30,20 @@ class Baseline(ModelBase):
 
     def forward(self, x: torch.tensor, mask: torch.tensor) -> torch.tensor:
         """ Forwarding logic """
-        
-        h0 = torch.zeros(self.num_layers, x.size[0], self.hidden_size)
-        c0 = torch.zeros(self.num_layers, x.size[0], self.hidden_size)
-        h1 = torch.zeros(self.num_layers, x.size[0], self.hidden_size)
-        c1 = torch.zeros(self.num_layers, x.size[0], self.hidden_size)
+
+        h0 = torch.zeros(self.num_layers, x.size()[0], self.hidden_size)
+        c0 = torch.zeros(self.num_layers, x.size()[0], self.hidden_size)
+        h1 = torch.zeros(self.num_layers, x.size()[0], self.hidden_size)
+        c1 = torch.zeros(self.num_layers, x.size()[0], self.hidden_size)
         
         ss8, _ = self.lstm(x, (h0, c0))
-        ss8 = ss8[:, -1, :]
+        ss8 = ss8[:, :, :]
         ss8 = self.fc_ss8(ss8)
         
         ss3, _ = self.lstm(x, (h1, c1))
-        ss3 = ss3[:, -1, :]
+        ss3 = ss3[:, :, :]
         ss3 = self.fc_ss3(ss3)
+
+
         return [ss8, ss3]
 
