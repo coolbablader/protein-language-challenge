@@ -19,4 +19,4 @@ class ChallengeDataOnlyEmbedding(DatasetBase):
     def __init__(self, *args, **kwargs):
         super(ChallengeDataOnlyEmbedding, self).__init__(*args, **kwargs)
 
-        self.X = self.X[:, :, :1300]
+        self.X = self.X[:, :, 20:1300]
