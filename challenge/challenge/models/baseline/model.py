@@ -22,8 +22,8 @@ class Baseline(ModelBase):
         # Task block
         
         self.lstm = nn.LSTM(in_features, self.hidden_size, self.num_layers, dropout=0.8, batch_first = True)
-        self.fc_ss8 = nn.Linear(hidden_size, 8)
-        self.fc_ss3 = nn.Linear(hidden_size, 3)
+        self.fc_ss8 = nn.Linear(self.hidden_size, 8)
+        self.fc_ss3 = nn.Linear(self.hidden_size, 3)
 
         log.info(f'<init>: \n{self}')
 
