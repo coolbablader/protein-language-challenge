@@ -16,6 +16,7 @@ class Baseline(ModelBase):
         """
         super(Baseline, self).__init__()
         
+        # Check the nput dimensions and see if the hidden_size affects the evaluation metric. Keep hidden_size above 100 :)
         self.num_layers = 2
         self.hidden_size = 160
         
