@@ -15,19 +15,32 @@ class Baseline(ModelBase):
             in_features: size in features
         """
         super(Baseline, self).__init__()
-
+        
+        self.num_layers = 2
+        self.hidden_size = 160
+        
         # Task block
         
-        self.ss8 = nn.LSTM(input_size=in_features, num_layers=1, hidden_size=8, dropout=0.8)
-        self.ss3 = nn.LSTM(input_size=in_features, num_layers=1, hidden_size=3, dropout=0.8)
+        self.lstm = nn.LSTM(in_features, self.hidden_size, self.num_layers, dropout=0.8, batch_first = True)
+        self.fc_ss8 = nn.Linear(hidden_size, 8)
+        self.fc_ss3 = nn.Linear(hidden_size, 3)
 
         log.info(f'<init>: \n{self}')
 
     def forward(self, x: torch.tensor, mask: torch.tensor) -> torch.tensor:
         """ Forwarding logic """
-
-        ss8, hidden_cell1 = self.ss8(x)
-        ss3, hidden_cell2 = self.ss3(x)
-
+        
+        h0 = torch.zeros(self.num_layers, x.size[0], self.hidden_size)
+        c0 = torch.zeros(self.num_layers, x.size[0], self.hidden_size)
+        h1 = torch.zeros(self.num_layers, x.size[0], self.hidden_size)
+        c1 = torch.zeros(self.num_layers, x.size[0], self.hidden_size)
+        
+        ss8, _ = self.lstm(x, (h0, c0))
+        ss8 = ss8[:, -1, :]
+        ss8 = self.fc_ss8(ss8)
+        
+        ss3, _ = self.lstm(x, (h1, c1))
+        ss3 = ss3[:, -1, :]
+        ss3 = self.fc_ss3(ss3)
         return [ss8, ss3]
 
