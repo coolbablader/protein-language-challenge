@@ -18,16 +18,16 @@ class Baseline(ModelBase):
 
         # Task block
         
-        self.ss8 = nn.LSTM(input_size=in_features, num_layers=8, hidden_size=1, dropout=0.8)
-        self.ss3 = nn.LSTM(input_size=in_features, num_layers=3, hidden_size=1, dropout=0.8)
+        self.ss8 = nn.LSTM(input_size=in_features, num_layers=1, hidden_size=8, dropout=0.8)
+        self.ss3 = nn.LSTM(input_size=in_features, num_layers=1, hidden_size=3, dropout=0.8)
 
         log.info(f'<init>: \n{self}')
 
     def forward(self, x: torch.tensor, mask: torch.tensor) -> torch.tensor:
         """ Forwarding logic """
 
-        ss8 = torch.flatten(self.ss8(x))
-        ss3 = torch.flatten(self.ss3(x))
+        ss8, hidden_cell1 = self.ss8(x)
+        ss3, hidden_cell2 = self.ss3(x)
 
         return [ss8, ss3]
 
