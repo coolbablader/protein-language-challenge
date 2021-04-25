@@ -13,7 +13,7 @@ data_loader:
   args:
     train_path: [data/Train_ESM1b.npz]
     test_path: [data/TS115_ESM1b.npz]
-    dataset_loader: ChallengeDataOnlyEmbedding
+    dataset_loader: ChallengeData
     batch_size: 15
     nworkers: 0 # dont change
     shuffle: true
